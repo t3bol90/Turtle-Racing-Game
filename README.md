@@ -1,2 +1,2 @@
 # TurtleProj
-Creat a game with python lib named turtle :&lt;
+Create a game with python lib called turtle :&lt;
