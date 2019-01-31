@@ -1,5 +1,5 @@
-from construct import createRoad
-from construct import createTurtles
+from construct import createRoad, createTurtles, randomTurtles
 
-createRoad.create()
+length = createRoad.create()
 t = createTurtles.create()
+randomTurtles.random(t, length)

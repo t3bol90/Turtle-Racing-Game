@@ -21,3 +21,4 @@ def create():
         backward(160)
         left(90)
         forward(20)
+    return n
