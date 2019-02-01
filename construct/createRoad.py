@@ -1,6 +1,7 @@
 from turtle import *
 
 def create():
+    speed(0)
     penup()     #set the default position
     goto(-140,140)
 

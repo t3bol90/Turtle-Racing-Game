@@ -1,7 +1,7 @@
 from turtle import *
 
 def create():
-    x, y, spin = -160, 100, 0    #set the default coordinates
+    x, y, spin = -150, 100, 0    #set the default coordinates
     tur = []
 
     for n in ('#3FAABF','#C14242','#41BF3F','#A13FBF'):   #create the turtles
