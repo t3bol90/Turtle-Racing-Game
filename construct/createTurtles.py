@@ -1,10 +1,10 @@
 from turtle import *
-
+from random import randint
 def create():
     x, y, spin = -150, 100, 0    #set the default coordinates
     tur = []
 
-    for n in ('#3FAABF','#C14242','#41BF3F','#A13FBF'):   #create the turtles
+    for n in (gencolor(),gencolor(),gencolor(),gencolor()):   #create the turtles
     #customize the turtles
         t = Turtle()
         t.color(n)
@@ -26,3 +26,6 @@ def create():
         tur.append(t)
 
     return tur  #return the list of turtles
+def gencolor():
+    r = lambda: randint(0, 255)
+    return ('#%02X%02X%02X' % (r(), r(), r()))
