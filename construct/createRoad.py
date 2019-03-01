@@ -1,5 +1,5 @@
 from turtle import *
-
+from construct.createTurtles import gencolor
 def makeshort(n):
     n = int(10)
 def makelong(n):
@@ -12,15 +12,20 @@ def create():
     penup()     #set the default position
     goto(-140,140)
     n = 0
+    bgcolor("white")
+    # onkey(makeshort(n),"U")
+    # onkey(makelong(n),"O")
+    # onkey(makemedium(n),"I")
+    # listen()
+
+    screensize(480, 360)
+
     n = int(textinput("Noti from Pornhub ", "Please enter the length of the road:  "))
-    #n = int(input("Please enter the length of the road: "))
     n = n + 1
     for step in range(n):   #draw lines of the road
         write(step, align = 'center')
         right(90)
         forward(10)
-        pendown()
-
         for step in range (15): #draw dashed lines
             forward(10)
             if (step % 2 == 0): penup()

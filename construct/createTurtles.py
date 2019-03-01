@@ -31,3 +31,10 @@ def create():
         tur.append(t)
 
     return tur  #return the list of turtles
+<<<<<<< HEAD
+=======
+def gencolor():
+    r = lambda: randint(0, 255)
+    return ('#%02X%02X%02X' % (r(), r(), r()))
+
+>>>>>>> upstream/master
