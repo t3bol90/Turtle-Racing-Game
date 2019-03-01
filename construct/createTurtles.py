@@ -1,10 +1,5 @@
 from turtle import *
 from random import randint
-
-def gencolor(): #Random color for the turtles
-    r = lambda: randint(0, 255)
-    return ('#%02X%02X%02X' % (r(), r(), r()))
-
 def create():
     x, y, spin = -150, 100, 0    #set the default coordinates
     tur = []
@@ -31,3 +26,6 @@ def create():
         tur.append(t)
 
     return tur  #return the list of turtles
+def gencolor():
+    r = lambda: randint(0, 255)
+    return ('#%02X%02X%02X' % (r(), r(), r()))
