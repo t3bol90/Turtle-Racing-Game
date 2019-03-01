@@ -1,0 +1,44 @@
+from turtle import *
+
+def create(tur):
+    #Clear drawer's line and pen-it-up
+    clear()
+    pu()
+    #Clear turtles' lines
+    for i in range(4):
+        tur[i].clear()
+    #Penup turtles
+    for i in range(4):
+        tur[i].pu()
+    #Hide turtles
+    for i in range(4):
+        tur[i].ht()
+    #Draw the ranking
+    ht()
+    y = 100
+    setpos(-220, y)
+    pd()
+    for i in range(3):
+        forward(480)
+        pu()
+        y -= 100
+        goto(-220, y)
+        pd()
+    pu()
+    x = -220
+    setpos(x, 100)
+    pd()
+    right(90)
+    forward(200)
+    for i in range(4):
+        pu()
+        x += 120
+        goto(x, 100)
+        pd()
+        forward(200)
+    #Write something :v
+    pu()
+    goto(-280, 40)
+    write("Turtle", move=False, align="center", font=("Arial", 15, "normal"))
+    goto(-280, -60)
+    write("Time", move=False, align="center", font=("Arial", 15, "normal"))
