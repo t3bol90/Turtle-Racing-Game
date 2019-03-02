@@ -1,97 +1,82 @@
 from turtle import *
 from random import randint
 from random import random
-from typing import Any, Union
 import datetime
+from construct.createTurtles import gencolor
+from time import perf_counter
 
 
-def eventrand():
-    Bruijn = [0,0,0,0,1,0,0,1,0,1,1,0,0,1,1,1,1,1,0,0,0,1,1,0,1,1,1,0,1,0,1,0,0,0,0]
-    i = randint(4,31)
+#Apply de Bruijn Sequence to encode the events of turtles and the turtles theirself
+##2 first bits encode which turtles
+##3 bits after encode the events
+def eventRand():
+    Bruijn = [0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1]
+    i = randint(0, 26)
     X = []
-    for o in range(4):
-        Bitarr1 = [Bruijn[i],Bruijn[i+1],Bruijn[i+2],Bruijn[i+3],Bruijn[i+4]]
-        S = Bitarr1[0]*2+Bitarr1[1]
-        T = Bitarr1[2]*4 + Bitarr1[3]*2 + Bitarr1[4]*1
-        T = T%4
+    for o in range(8):
+        Bitarr1 = [Bruijn[i], Bruijn[i + 1], Bruijn[i + 2], Bruijn[i + 3], Bruijn[i + 4]]
+        S = Bitarr1[0] * 2 + Bitarr1[1]
+        T = Bitarr1[2] * 4 + Bitarr1[3] * 2 + Bitarr1[4] * 1
         i = i - 1
         X.append(S)
         X.append(T)
     return X
 
-def random(x, n):
-    Event = eventrand()
-    s1 = s2 = s3 = s4 = 0
-    E = [1,1,1,1]
-    for i in range(4):
-        E[Event[2*i]] = int(Event[2*i+1])
-    num_e = randint(0,n)
-    num_f = randint(0,n)
-    currentDT = datetime.datetime.now()
-    for step in range(n*20):
-        a = randint(1,3)
-        b = randint(1,3)
-        c = randint(1,3)
-        d = randint(1,3)
-        if(s1 < 20 * n):
-            if (E[0] == 0 and step == num_e):
-                a = 0
-                x[0].write("Stuning",font=("Arial", 5, "normal"))
-            if (E[0] == 2 and step == num_f):
-                x[0].right(180)
-                x[0].forward(a*3)
-                x[0].right(180)
-                s1-=3*a
-            s1 += a
-            x[0].forward(a)
-        else:
-            x[0].goto(-150 + 20 * n, 100)
-            S1DT = datetime.datetime.now()
-        if(s2 < 20 * n):
-            if (E[1] == 0 and step == num_e):
-                b = 0
-                x[1].write("Stuning",font=("Arial", 5, "normal"))
-            if (E[1] == 2 and step == num_f):
-                x[1].right(180)
-                x[1].forward(b * 3)
-                x[1].right(180)
-                s2-=3 * b
-            s2 += b
-            x[1].forward(b)
-        else:
-            x[1].goto(-150 + 20 * n, 70)
-            S2DT = datetime.datetime.now()
-        if(s3 < 20 * n):
-            if (E[2] == 0 and step == num_e):
-                c = 0
-                x[2].write("Stuning",font=("Arial", 5, "normal"))
-            if (E[2] == 2 and step == num_f):
-                x[2].right(180)
-                x[2].forward(c * 3)
-                x[2].right(180)
-                s3-=3 * c
-            s3 += c
-            x[2].forward(c)
 
-        else:
-            x[2].goto(-150 + 20 * n, 40)
-            S3DT = datetime.datetime.now()
-        if(s4 < 20 * n):
-            if E[3] == 0 and step == num_e:
-                d = 0
-                x[3].write("Stuning",font=("Arial", 5, "normal"))
-            if E[3] == 2 and step == num_f:
-                x[3].right(180)
-                x[3].forward(d * 3)
-                x[3].right(180)
-                s4-=3 * d
-            s4 += d
-            x[3].forward(d)
-        else:
-            x[3].goto(-150 + 20 * n, 10)
-            S4DT = datetime.datetime.now()
-    x[0].write(currentDT.microsecond - S1DT.microsecond)
-    x[1].write(currentDT.microsecond - S2DT.microsecond)
-    x[2].write(currentDT.microsecond - S3DT.microsecond)
-    x[3].write(currentDT.microsecond - S4DT.microsecond)
+def makeTutlePos(Tur,n):
+    X = []
+    for i in range(n):
+        temp = Tur[i].position ()
+        temp = list(temp)
+        X.append(temp[0])
+    return X
 
+
+#Maketime Function
+
+
+def makeItMove(valTurtle, step):
+    event = eventRand()
+    min_s = 1
+    max_s = 3
+    currentDT = perf_counter()
+    time_r = [0,0,0,0]
+    road_l = step * 20
+    flag = [1, 1, 1, 1]
+    tur_set = [100, 70, 40, 10]
+    num_e = randint(0, road_l)
+    num_f = randint(num_e, road_l)
+    endPos = -150 + 20 * step
+    i = randint(0,num_e)
+    while(flag[0] == 1 or flag[1] == 1 or flag[2] == 1 or flag[3] == 1):
+        speed = [randint(min_s, max_s), randint(min_s, max_s), randint(min_s, max_s), randint(min_s, max_s)]
+        turRoadLengh = makeTutlePos(valTurtle,4)
+        i = i + 1
+        for j in range(4):
+            if (endPos - turRoadLengh[j] >= max_s):
+                if (((0 == event[2 * j + 1] or event[2 * j + 1] == 1) and (i == num_f)) or ((0 == event[4 * j + 1] or event[4 * j + 1] == 1) and (i == num_e))):
+                    if (1 == event[4 * j + 1] or event[4 * j + 1] == 2):
+                        e_index = event[4*j]
+                    else:
+                        e_index = event[2*j]
+                    valTurtle[e_index].right(180)
+                    valTurtle[e_index].forward(speed[e_index]*4)
+                    valTurtle[e_index].right(180)
+                if ((2 == event[2 * j + 1] or event[2 * j + 1] == 3) or (2 == event[4 * j + 1] or event[4 * j + 1] == 3)) and (num_e < i and i < num_f):
+                    if (3 == event[4 * j + 1] or event[4 * j + 1] == 4):
+                        e_index = event[4*j]
+                    else:
+                        e_index = event[2*j]
+                    speed[e_index] = 0
+                    valTurtle[e_index].color(gencolor())
+
+                valTurtle[j].forward(speed[j])
+            else:
+                valTurtle[j].goto(endPos, tur_set[j])
+                if (flag[j] == 1):
+                    time_r[j] = perf_counter()
+                    flag[j] = flag[j] - 1
+    valTurtle[0].write(time_r[0] - currentDT)
+    valTurtle[1].write(time_r[1] - currentDT)
+    valTurtle[2].write(time_r[2] - currentDT)
+    valTurtle[3].write(time_r[3] - currentDT)
