@@ -6,13 +6,13 @@ def create(tur):
     pu()
     #Clear turtles' lines
     for i in range(4):
-        tur[i].clear()
+        tur[2*i].clear()
     #Penup turtles
     for i in range(4):
-        tur[i].pu()
+        tur[2*i].pu()
     #Hide turtles
     for i in range(4):
-        tur[i].ht()
+        tur[2*i].ht()
     #Draw the ranking
     ht()
     y = 100
@@ -42,3 +42,16 @@ def create(tur):
     write("Turtle", move=False, align="center", font=("Arial", 15, "normal"))
     goto(-280, -60)
     write("Time", move=False, align="center", font=("Arial", 15, "normal"))
+    #Turtle's rank
+    x = -160
+    for i in range(4):
+        tur[2*i].goto(x, 50)
+        tur[2*i].left(90)
+        x += 120
+        tur[2*i].st()
+    x = -160
+    for i in range(4):
+        goto(x, 100)
+        x += 120
+        write(tur[2*i+1])
+        

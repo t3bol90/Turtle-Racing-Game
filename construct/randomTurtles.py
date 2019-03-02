@@ -3,6 +3,8 @@ from random import randint
 from random import random
 import datetime
 from construct.createTurtles import gencolor
+from time import perf_counter
+
 
 #Apply de Bruijn Sequence to encode the events of turtles and the turtles theirself
 ##2 first bits encode which turtles
@@ -30,12 +32,15 @@ def makeTutlePos(Tur,n):
     return X
 
 
+#Maketime Function
+
+
 def makeItMove(valTurtle, step):
     event = eventRand()
     min_s = 1
     max_s = 3
-    currentDT = datetime.datetime.now()
-    time_r = [datetime.datetime.now(), datetime.datetime.now(), datetime.datetime.now(), datetime.datetime.now()]
+    currentDT = perf_counter()
+    time_r = [0,0,0,0]
     road_l = step * 20
     flag = [1, 1, 1, 1]
     tur_set = [100, 70, 40, 10]
@@ -69,9 +74,9 @@ def makeItMove(valTurtle, step):
             else:
                 valTurtle[j].goto(endPos, tur_set[j])
                 if (flag[j] == 1):
-                    time_r[j] = datetime.datetime.now()
+                    time_r[j] = perf_counter()
                     flag[j] = flag[j] - 1
-    valTurtle[0].write(currentDT.microsecond - time_r[0].microsecond)
-    valTurtle[1].write(currentDT.microsecond - time_r[1].microsecond)
-    valTurtle[2].write(currentDT.microsecond - time_r[2].microsecond)
-    valTurtle[3].write(currentDT.microsecond - time_r[3].microsecond)
+    valTurtle[0].write(time_r[0] - currentDT)
+    valTurtle[1].write(time_r[1] - currentDT)
+    valTurtle[2].write(time_r[2] - currentDT)
+    valTurtle[3].write(time_r[3] - currentDT)
