@@ -1,8 +1,9 @@
 import time
-from construct import createRoad, createTurtles, randomTurtles, createRanking
+from construct import createRoad, createTurtles, randomTurtles,createRanking
 
-Length = createRoad.create()
+
+length = createRoad.create()
 t = createTurtles.create()
 time.sleep(1)
-randomTurtles.makeItMove(t, Length)
-createRanking.create(t)
+time_r = randomTurtles.maktIMove(t, length)
+createRanking.create(time_r,t)
