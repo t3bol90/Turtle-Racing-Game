@@ -4,7 +4,7 @@ from random import random
 from construct.createTurtles import gencolor
 from time import perf_counter
 
-
+#Apply de Bruijn sequence to create events of turtles
 def eventRand():
     Bruijn = [0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1]
     i = randint (0, 26)
@@ -18,7 +18,7 @@ def eventRand():
         X.append (T)
     return X
 
-
+#
 def makeTutlePos(Tur, n):
     X = []
     for i in range (n):
@@ -27,27 +27,27 @@ def makeTutlePos(Tur, n):
         X.append (temp[0])
     return X
 
-
+#Sort list of turtle's index and time records
 def makeTrueTime_r(time_r):
     index = []
     time = []
-    for j in range (0, 4):
+    for j in range (4):
         time.append (time_r[2 * j + 1])
-    time.sort ()
+    time.sort (reverse = True)
     for i in range (4):
         for j in range (i, 4):
             if (time[i] == time_r[2 * j + 1]):
-                swap (time_r[2 * j], time_r[2 * i])
-                swap (time_r[2 * j + 1], time_r[2 * i + 1])
+                #Swap index
+                temp = time_r[2 * j]
+                time_r[2 * j] = time_r[2 * i]
+                time_r[2 * i] = temp
+                #Swap time
+                temp = time_r[2 * j + 1]
+                time_r[2 * j + 1] = time_r[2 * i + 1]
+                time_r[2 * i + 1] = temp
 
-
-def swap(a, b):
-    temp = a
-    a = b
-    b = temp
-
-
-def maktIMove(valTurtle, step):
+#Making random events
+def makeItMove(valTurtle, step):
     event = eventRand ()
     min_s = 1
     max_s = 3
@@ -76,15 +76,18 @@ def maktIMove(valTurtle, step):
         for j in range (4):
             if (endPos - turRoadLengh[j] >= max_s):
                 # Event reverse
-                if ((0 == event[2 * j + 1] or event[2 * j + 1] == 1 or 0 == event[4 * j + 1] or event[
-                    4 * j + 1] == 1) and (rev_num_f[event[2 * j]] > i > rev_num_e[event[2 * j]])):
+                if (((0 == event[2 * j + 1] or event[2 * j + 1] == 1)and(rev_num_f[event[2 * j]] == i)) or ((0 == event[4 * j + 1] or event[
+                    4 * j + 1] == 1) and (i == rev_num_e[event[2 * j]]))):
                     if (1 == event[4 * j + 1] or event[4 * j + 1] == 2):
                         e_index = event[4 * j]
                     else:
                         e_index = event[2 * j]
-                    rev_index = rev_index + 1
-                    if (rev_domb[rev_index%5] == 2):
-                        valTurtle[e_index].right (180)
+                    rev_index = rev_index - 1
+                    if (rev_domb[rev_index%5]):
+                        if(rev_index == 2):
+                            valTurtle[e_index].right (180)
+                        rev_num_e[e_index] = rev_num_e[e_index]+1
+                        rev_num_f[e_index] = rev_num_f[e_index]+1
                 # Event stun
                 if ((2 == event[2 * j + 1] or event[2 * j + 1] == 3) and (
                         stun_num_e[event[2 * j]] < i < stun_num_f[event[2 * j]])) or (
@@ -104,6 +107,7 @@ def maktIMove(valTurtle, step):
                 if (flag[j] == 1):
                     time_r[j * 2 + 1] = perf_counter ()
                     flag[j] = flag[j] - 1
+
     for j in range (4):
         time_r[2 * j + 1] = time_r[2 * j + 1] - currentDT
     makeTrueTime_r (time_r)
