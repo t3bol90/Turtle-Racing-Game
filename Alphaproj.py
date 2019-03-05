@@ -1,6 +1,7 @@
 import time
-from construct import createRoad, createTurtles, randomTurtles,createRanking
+from construct import createRoad, createTurtles, randomTurtles,createRanking, createButton
 
+selectLength()
 length = createRoad.create()
 t = createTurtles.create()
 time.sleep(1)
