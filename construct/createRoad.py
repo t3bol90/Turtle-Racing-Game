@@ -10,7 +10,7 @@ def create():
 
     screensize(480, 360)
 
-    n = textinput("Turtles' race","Please input the length of the road")
+    n = int(textinput("Turtles' race","Please input the length of the road"))
     n = n + 1
     #Draw lines of the road
     for step in range(n):
