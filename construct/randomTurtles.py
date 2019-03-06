@@ -29,24 +29,6 @@ def makeTutlePos(Tur, n):
         X.append (temp[0])
     return X
 
-#Sort list of turtle's index and time records
-def makeTrueTime_r(time_r):
-    index = []
-    time = []
-    for j in range (4):
-        time.append (time_r[2 * j + 1])
-    time.sort (reverse = True)
-    for i in range (4):
-        for j in range (i, 4):
-            if (time[i] == time_r[2 * j + 1]):
-                #Swap index
-                temp = time_r[2 * j]
-                time_r[2 * j] = time_r[2 * i]
-                time_r[2 * i] = temp
-                #Swap time
-                temp = time_r[2 * j + 1]
-                time_r[2 * j + 1] = time_r[2 * i + 1]
-                time_r[2 * i + 1] = temp
 
 # Sort list of turtle's index and time records
 def makeTrueTime_r(time_r):
