@@ -1,6 +1,17 @@
 from turtle import *
+from construct.createTurtles import gencolor
 
-#Create short road
+
+#Create road's length buttons
+def makeshort(n):
+    n = int(10)
+def makelong(n):
+    n = int(20)
+def makemedium(n):
+    n = int(15)
+
+
+#Create road of course
 def create():
     speed(0)
     penup()
