@@ -8,7 +8,7 @@ root.geometry("800x600+300-80")
 root.title("Turtle Racing Boiz")
 #--------------------------------------------------------------------#
 def constructor(event):
-	root.destroy()
+	#root.destroy() #This is Dangerous step. Need to think!!! :<
 	createtheWorld()
 #--------------------------------------------------------------------#
 #Set background
