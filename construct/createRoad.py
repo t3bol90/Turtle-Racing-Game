@@ -18,14 +18,10 @@ def create():
     goto(-140,140)  #Set the default position
     n = 0
     bgcolor("white")
-    # onkey(makeshort(n),"U")
-    # onkey(makelong(n),"O")
-    # onkey(makemedium(n),"I")
-    # listen()
 
     screensize(480, 360)
 
-    n = int(textinput("Noti from Pornhub ", "Please enter the length of the road:  "))
+    n = int(textinput("Turtles' race","Please input the length of the road"))
     n = n + 1
     #Draw lines of the road
     for step in range(n):

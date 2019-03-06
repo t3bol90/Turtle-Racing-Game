@@ -55,3 +55,4 @@ def create(timeindex, tur):
         goto (x, -55)
         x += 120
         write (("%0.2f" % timeindex[2 * i + 1]), move=False, align="center", font=("Arial", 10, "bold"))
+    #Medals
