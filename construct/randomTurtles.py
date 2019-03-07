@@ -75,7 +75,7 @@ def makeItMove(valTurtle, step):
     maxSpeed = 3
     StartTime = perf_counter ()
     RankTimeTable = [0, 0, 1, 0, 2, 0, 3, 0]
-    road_l = step * 20
+    road_l = (step+1) * 20
     flag = [1, 1, 1, 1]
     SetTurPosition = [100, 70, 40, 10]
     stunIndex = [0,0,0,0]
