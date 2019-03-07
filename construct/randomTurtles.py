@@ -4,7 +4,8 @@ from random import random
 from construct.createTurtles import gencolor
 from time import perf_counter
 
-#Apply de Bruijn sequence to create events of turtles
+
+# Apply de Bruijn sequence to create events of turtles
 def eventRand():
     Bruijn = [0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1]
     i = randint (0, 26)
@@ -17,6 +18,7 @@ def eventRand():
         X.append (S)
         X.append (T)
     return X
+
 
 #
 def makeTutlePos(Tur, n):
@@ -46,69 +48,74 @@ def makeTrueTime_r(time_r):
                 time_r[2 * j + 1] = time_r[2 * i + 1]
                 time_r[2 * i + 1] = temp
 
-#Making random events
+# Sort list of turtle's index and time records
+def makeTrueTime_r(time_r):
+    index = []
+    time = []
+    for j in range (4):
+        time.append (time_r[2 * j + 1])
+    time.sort (reverse=True)
+    for i in range (4):
+        for j in range (i, 4):
+            if (time[i] == time_r[2 * j + 1]):
+                # Swap index
+                temp = time_r[2 * j]
+                time_r[2 * j] = time_r[2 * i]
+                time_r[2 * i] = temp
+                # Swap time
+                temp = time_r[2 * j + 1]
+                time_r[2 * j + 1] = time_r[2 * i + 1]
+                time_r[2 * i + 1] = temp
+
+
+# Making random events
 def makeItMove(valTurtle, step):
     event = eventRand ()
-    min_s = 1
-    max_s = 3
-    currentDT = perf_counter ()
-    time_r = [0, 0, 1, 0, 2, 0, 3, 0]
-    road_l = step * 20
+    minSpeed = 1
+    maxSpeed = 3
+    StartTime = perf_counter ()
+    RankTimeTable = [0, 0, 1, 0, 2, 0, 3, 0]
+    road_l = (step+1) * 20
     flag = [1, 1, 1, 1]
-    tur_set = [100, 70, 40, 10]
-    rev_num_e = [0, 0, 0, 0]
-    rev_num_f = [0, 0, 0, 0]
-    rev_domb = [2, 0, 2, 1, 1, 1, 1, 1]
-    rev_index = 1
-    stun_num_e = [0, 0, 0, 0]
-    stun_num_f = [0, 0, 0, 0]
-    for i in range (4):
-        rev_num_e[i] = randint (0, road_l - 10)
-        rev_num_f[i] = randint (rev_num_e[i], rev_num_e[i] + 10)
-        stun_num_e[i] = randint (0, road_l - 10)
-        stun_num_f[i] = randint (rev_num_e[i], rev_num_e[i] + 10)
-    endPos = -150 + 20 * step
-    i = randint (0, min (rev_num_e))
+    SetTurPosition = [100, 70, 40, 10]
+    stunIndex = [0,0,0,0]
+    stunStep = 6
+    revStep = 6
+    endPos = -150 + road_l
+    pos0 = [randint(-140,endPos),randint(-140,endPos),randint(-140,endPos),randint(-140,endPos)]
+    pos1 = [randint(-140,endPos),randint(-140,endPos),randint(-140,endPos),randint(-140,endPos)]
+    pos2 = [randint(-140,endPos),randint(-140,endPos),randint(-140,endPos),randint(-140,endPos)]
     while (flag[0] == 1 or flag[1] == 1 or flag[2] == 1 or flag[3] == 1):
-        speed = [randint (min_s, max_s), randint (min_s, max_s), randint (min_s, max_s), randint (min_s, max_s)]
+        speed = [randint (minSpeed, maxSpeed), randint (minSpeed, maxSpeed), randint (minSpeed, maxSpeed), randint (minSpeed, maxSpeed)]
         turRoadLengh = makeTutlePos (valTurtle, 4)
-        i = i + 1
+        TurtleEventFlag = [1, 1, 1, 1]
+        for i in range(8): #Check event
+            #If event is stun
+            if((event[i*2+1]==0  and (pos0[event[2*i]]-maxSpeed)< turRoadLengh[event[i*2]] < pos0[event[2*i]])or (event[2*i+1]==1 and (pos1[event[2*i]]-maxSpeed)<turRoadLengh[event[i*2]]<pos1[event[2*i]])):
+                TurtleEventFlag[event[i*2]] = 0
+                valTurtle[event[2*i]].color(gencolor())
+                stunIndex[event[i*2]] = stunIndex[event[i*2]] + 1
+                if (stunIndex[event[i*2]] % stunStep == 0):
+                    TurtleEventFlag[event[i * 2]] = 1
+            #If event is backward
+            if((event[i*2+1]==2 or event[i*2+1]==3)and(pos2[event[i*2]] - maxSpeed< turRoadLengh[event[i*2]] < pos2[event[i*2]])):
+                TurtleEventFlag[event[i*2]] = -1
+###Make a real move and do event act
         for j in range (4):
-            if (endPos - turRoadLengh[j] >= max_s):
-                # Event reverse
-                if (((0 == event[2 * j + 1] or event[2 * j + 1] == 1)and(rev_num_f[event[2 * j]] == i)) or ((0 == event[4 * j + 1] or event[
-                    4 * j + 1] == 1) and (i == rev_num_e[event[2 * j]]))):
-                    if (1 == event[4 * j + 1] or event[4 * j + 1] == 2):
-                        e_index = event[4 * j]
-                    else:
-                        e_index = event[2 * j]
-                    rev_index = rev_index - 1
-                    if (rev_domb[rev_index%5]):
-                        if(rev_index == 2):
-                            valTurtle[e_index].right (180)
-                        rev_num_e[e_index] = rev_num_e[e_index]+1
-                        rev_num_f[e_index] = rev_num_f[e_index]+1
-                # Event stun
-                if ((2 == event[2 * j + 1] or event[2 * j + 1] == 3) and (
-                        stun_num_e[event[2 * j]] < i < stun_num_f[event[2 * j]])) or (
-                        (2 == event[4 * j + 1] or event[4 * j + 1] == 3) and (
-                        stun_num_e[event[4 * j]] < i < stun_num_f[event[4 * j]])):
-                    if (3 == event[4 * j + 1] or event[4 * j + 1] == 4):
-                        e_index = event[4 * j]
-                    else:
-                        e_index = event[2 * j]
-                    if (j > e_index):
-                        valTurtle[e_index].backward (speed[e_index])
-                    speed[e_index] = 0
-                    valTurtle[e_index].color (gencolor ())
-                valTurtle[j].forward (speed[j])
+            if (endPos - turRoadLengh[j] >= maxSpeed):
+                if (TurtleEventFlag[j]==1):
+                    valTurtle[j].forward (speed[j])
+
+                if (TurtleEventFlag[j] == -1):
+                    valTurtle[j].left (180)
+                    pos2[j] = pos2[j] - speed[j]*revStep
             else:
-                valTurtle[j].goto (endPos, tur_set[j])
+                valTurtle[j].goto (endPos, SetTurPosition[j])
                 if (flag[j] == 1):
-                    time_r[j * 2 + 1] = perf_counter ()
+                    RankTimeTable[j * 2 + 1] = perf_counter ()
                     flag[j] = flag[j] - 1
 
     for j in range (4):
-        time_r[2 * j + 1] = time_r[2 * j + 1] - currentDT
-    makeTrueTime_r (time_r)
-    return time_r
+        RankTimeTable[2 * j + 1] = RankTimeTable[2 * j + 1] - StartTime
+    makeTrueTime_r (RankTimeTable)
+    return RankTimeTable
