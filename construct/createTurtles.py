@@ -10,7 +10,9 @@ def gencolor():
 
 #Create turtles absolutely
 def create():
-    x, y, spin = -150, 100, 0    #Set the default coordinates
+	#Set the default coordinates
+	if (n == 13):
+		x, y, spin = -150, 100, 0    
     tur = []
 
     for n in (gencolor(),gencolor(),gencolor(),gencolor()):   #Create the turtles

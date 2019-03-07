@@ -1,6 +1,6 @@
 from tkinter import *
 from turtle import *
-from Alphaproj import *
+from construct.constructWorld import *
 
 #--------------------------------------------------------------------#
 #Set main window
@@ -11,7 +11,7 @@ root.title("Turtle Racing Boiz")
 #Set select buttons window
 select = Tk()
 select.withdraw()
-select.geometry("523x100+400-500")
+select.geometry("545x115+450-280")
 select.title("Road's Length")
 #--------------------------------------------------------------------#
 #Create road's length buttons
@@ -39,20 +39,30 @@ def makemedium(event, frame):
 #Choose length
 def selectLength(event):
 	#Frame contains select buttons
-	selectframe = Frame(select)
+	selectframe = Frame(select, bg = "#f2cf8d")
 	selectframe.pack(fill = BOTH)
-	#Select text
-	selectphoto = PhotoImage(file = "images/select/chooseLength.png")
+	#Select text	
+	selectphoto = PhotoImage(file = "images/select/chooseLength.png", master = selectframe)
 	text = Label(selectframe, image = selectphoto)
-	text.image = selectphoto
-	text.grid(row = 0, columnspan = 3, sticky=N+E+S+W)
-	lengthbutton1 = Button(selectframe, text = "Short")
+	text.image = selectphoto #This is really annoying when Python uses its garbage-collector :<
+	text.grid(row = 0, columnspan = 3)
+	#Button Butts :>
+	#Short
+	buttonphoto1 = PhotoImage(file = "images/select/ButtonShort.png", master = selectframe)
+	lengthbutton1 = Button(selectframe, image = buttonphoto1)
+	lengthbutton1.image = buttonphoto1
 	lengthbutton1.bind("<Button-1>", lambda event: makeshort(event, selectframe))
 	lengthbutton1.grid(row = 1, column = 0, sticky=N+E+S+W)
-	lengthbutton2 = Button(selectframe, text = "Medium")
+	#Medium
+	buttonphoto2 = PhotoImage(file = "images/select/ButtonMedium.png", master = selectframe)
+	lengthbutton2 = Button(selectframe, image = buttonphoto2)
+	lengthbutton2.image = buttonphoto2
 	lengthbutton2.bind("<Button-1>", lambda event: makemedium(event, selectframe))
 	lengthbutton2.grid(row = 1, column = 1, sticky=N+E+S+W)
-	lengthbutton3 = Button(selectframe, text = "Long")
+	#Long
+	buttonphoto3 = PhotoImage(file = "images/select/ButtonLong.png", master = selectframe)
+	lengthbutton3 = Button(selectframe, image = buttonphoto3)
+	lengthbutton3.image = buttonphoto3
 	lengthbutton3.bind("<Button-1>", lambda event: makelong(event, selectframe))
 	lengthbutton3.grid(row = 1, column = 2, sticky=N+E+S+W)
 	#Deiconify select window
