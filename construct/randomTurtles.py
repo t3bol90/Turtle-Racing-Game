@@ -29,24 +29,6 @@ def makeTutlePos(Tur, n):
         X.append (temp[0])
     return X
 
-#Sort list of turtle's index and time records
-def makeTrueTime_r(time_r):
-    index = []
-    time = []
-    for j in range (4):
-        time.append (time_r[2 * j + 1])
-    time.sort (reverse = True)
-    for i in range (4):
-        for j in range (i, 4):
-            if (time[i] == time_r[2 * j + 1]):
-                #Swap index
-                temp = time_r[2 * j]
-                time_r[2 * j] = time_r[2 * i]
-                time_r[2 * i] = temp
-                #Swap time
-                temp = time_r[2 * j + 1]
-                time_r[2 * j + 1] = time_r[2 * i + 1]
-                time_r[2 * i + 1] = temp
 
 # Sort list of turtle's index and time records
 def makeTrueTime_r(time_r):
@@ -75,16 +57,17 @@ def makeItMove(valTurtle, step):
     maxSpeed = 3
     StartTime = perf_counter ()
     RankTimeTable = [0, 0, 1, 0, 2, 0, 3, 0]
-    road_l = (step+1) * 20
+    road_l = step * 20
     flag = [1, 1, 1, 1]
     SetTurPosition = [100, 70, 40, 10]
     stunIndex = [0,0,0,0]
-    stunStep = 6
-    revStep = 6
+    stunStep = step/4
+    revStep = step/4
     endPos = -150 + road_l
     pos0 = [randint(-140,endPos),randint(-140,endPos),randint(-140,endPos),randint(-140,endPos)]
     pos1 = [randint(-140,endPos),randint(-140,endPos),randint(-140,endPos),randint(-140,endPos)]
-    pos2 = [randint(-140,endPos),randint(-140,endPos),randint(-140,endPos),randint(-140,endPos)]
+    pos2 = [randint(-140,endPos/2),randint(-140,endPos/2),randint(-140,endPos/2),randint(-140,endPos/2)]
+    pos3 = [randint(endPos/2,endPos),randint(endPos/2,endPos),randint(endPos/2,endPos),randint(endPos/2,endPos)]
     while (flag[0] == 1 or flag[1] == 1 or flag[2] == 1 or flag[3] == 1):
         speed = [randint (minSpeed, maxSpeed), randint (minSpeed, maxSpeed), randint (minSpeed, maxSpeed), randint (minSpeed, maxSpeed)]
         turRoadLengh = makeTutlePos (valTurtle, 4)
@@ -98,7 +81,7 @@ def makeItMove(valTurtle, step):
                 if (stunIndex[event[i*2]] % stunStep == 0):
                     TurtleEventFlag[event[i * 2]] = 1
             #If event is backward
-            if((event[i*2+1]==2 or event[i*2+1]==3)and(pos2[event[i*2]] - maxSpeed< turRoadLengh[event[i*2]] < pos2[event[i*2]])):
+            if((event[i*2+1]==2 and(pos2[event[i*2]] - maxSpeed < turRoadLengh[event[i*2]] < pos2[event[i*2]]))or((event[i*2+1]==3)and(pos3[event[i*2]] - maxSpeed < turRoadLengh[event[i*2]] < pos3[event[i*2]]))):
                 TurtleEventFlag[event[i*2]] = -1
 ###Make a real move and do event act
         for j in range (4):
@@ -108,7 +91,10 @@ def makeItMove(valTurtle, step):
 
                 if (TurtleEventFlag[j] == -1):
                     valTurtle[j].left (180)
-                    pos2[j] = pos2[j] - speed[j]*revStep
+                    if (pos2[j] - maxSpeed<turRoadLengh[j]<pos2[j]):
+                        pos2[j] = pos2[j] - maxSpeed*revStep
+                    if (pos3[j] - maxSpeed<turRoadLengh[j]<pos3[j]):
+                        pos3[j] = pos3[j] - maxSpeed*revStep
             else:
                 valTurtle[j].goto (endPos, SetTurPosition[j])
                 if (flag[j] == 1):
