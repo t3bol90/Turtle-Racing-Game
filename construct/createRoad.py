@@ -1,12 +1,19 @@
 from turtle import *
+from tkinter import *
 from construct.createTurtles import gencolor
 
 
 #Create road of course
 def create(n):
+	cv = getcanvas()
+	cv.delete("all")
+	Bgphoto = PhotoImage(file = "images/race/BGTurtle.gif", master = cv)
+	cv.create_image(-360, -300, image = Bgphoto, anchor = N+W)
+	cv.image = Bgphoto
 	speed(0)
 	penup()
-	bgcolor("white")
+	color("white")
+	bgcolor("black")
 	screensize(360, 100)
 	#Set the default position
 	if (n == 13):

@@ -1,8 +1,13 @@
 from turtle import *
-
+from tkinter import *
+import time
 
 def create(timeindex, tur):
 	# Clear drawer's line and pen-it-up
+	cv = getcanvas()
+	Bgphoto = PhotoImage(file = "images/race/BGTurtleBlack.gif", master = cv)
+	cv.create_image(-360, -300, image = Bgphoto, anchor = N+W)
+	cv.image = Bgphoto
 	clear ()
 	pu ()
 	# Clear turtles' lines
@@ -56,4 +61,21 @@ def create(timeindex, tur):
 		x += 120
 		write (("%0.2f" % timeindex[2 * i + 1]), move=False, align="center", font=("Arial", 10, "bold"))
 	#Medals
-	
+	# Medal1 = Turtle()
+	# Medal1.pu()
+	# Medal1.goto(140, 140)
+	# flag = 3
+	# while(flag != 0):
+		# for i in range(1,13):
+			# dirImage = "images/reward_medals/F"
+			# dirImage += str(i)
+			# dirImage += ".png"
+			# Medal = PhotoImage(file = dirImage, master = cv)
+			# cv.create_image(-300, -280, image = Medal, anchor = N+W)
+			# time.sleep(0.5)
+			# cv.image = Medal
+			# Medal1 = Screen()
+			# Medal1.addshape(dirImage)
+			# Medal1 = Turtle()
+			# Medal1.shape(dirImage)
+		# flag -= 1
