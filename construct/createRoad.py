@@ -1,25 +1,32 @@
 from turtle import *
+from construct.createTurtles import gencolor
 
-def create():
-    speed(0)
-    penup()     #set the default position
-    goto(-140,140)
 
-    n = int(input("Please enter the length of the road: "))
-
-    for step in range(n):   #draw lines of the road
-        write(step, align = 'center')
-        right(90)
-        forward(10)
-        pendown()
-
-        for step in range (15): #draw dashed lines
-            forward(10)
-            if (step % 2 == 0): penup()
-            else: pendown()
-
-        penup() #return and start drawing the next line
-        backward(160)
-        left(90)
-        forward(20)
-    return n
+#Create road of course
+def create(n):
+	speed(0)
+	penup()
+	bgcolor("white")
+	screensize(360, 100)
+	#Set the default position
+	if (n == 13):
+		startPos = -120
+	elif (n == 17):
+		startPos = -160
+	elif(n == 21):
+		startPos = -200 
+	goto(startPos,140)
+	#Draw lines of the road
+	for step in range(n):
+		write(step, align = 'center')
+		right(90)
+		#Draw dashed lines
+		for step in range (15):
+			forward(10)
+			if (step % 2 == 0): penup()
+			else: pendown()
+		#Start drawing the next line
+		penup()
+		backward(150)
+		left(90)
+		forward(20)
