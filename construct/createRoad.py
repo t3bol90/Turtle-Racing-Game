@@ -15,7 +15,7 @@ def create(n):
 		startPos = -160
 	elif(n == 21):
 		startPos = -200 
-	goto(startPos,140)
+	goto(startPos, 40)
 	#Draw lines of the road
 	for step in range(n):
 		write(step, align = 'center')
