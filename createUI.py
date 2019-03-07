@@ -11,22 +11,26 @@ root.title("Turtle Racing Boiz")
 #Set select buttons window
 select = Tk()
 select.withdraw()
+select.geometry("523x100+400-500")
 select.title("Road's Length")
 #--------------------------------------------------------------------#
 #Create road's length buttons
 def makeshort(event, frame):
+	root.withdraw()
 	select.withdraw()
 	frame.destroy()
 	clearscreen()
 	createtheWorld(12)
 	root.deiconify()
 def makelong(event, frame):
+	root.withdraw()
 	select.withdraw()
 	frame.destroy()
 	clearscreen()
 	createtheWorld(20)
 	root.deiconify()
 def makemedium(event, frame):
+	root.withdraw()
 	select.withdraw()
 	frame.destroy()
 	clearscreen()
@@ -34,22 +38,23 @@ def makemedium(event, frame):
 	root.deiconify()
 #Choose length
 def selectLength(event):
-	#Hide old window
-	root.withdraw()
 	#Frame contains select buttons
 	selectframe = Frame(select)
 	selectframe.pack(fill = BOTH)
-	text = Label(selectframe, text = "Select the length of the road:")
-	text.grid(row = 0, columnspan = 3)
+	#Select text
+	selectphoto = PhotoImage(file = "images/select/chooseLength.png")
+	text = Label(selectframe, image = selectphoto)
+	text.image = selectphoto
+	text.grid(row = 0, columnspan = 3, sticky=N+E+S+W)
 	lengthbutton1 = Button(selectframe, text = "Short")
 	lengthbutton1.bind("<Button-1>", lambda event: makeshort(event, selectframe))
-	lengthbutton1.grid(row = 1, column = 0, columnspan = 1)
+	lengthbutton1.grid(row = 1, column = 0, sticky=N+E+S+W)
 	lengthbutton2 = Button(selectframe, text = "Medium")
 	lengthbutton2.bind("<Button-1>", lambda event: makemedium(event, selectframe))
-	lengthbutton2.grid(row = 1, column = 1, columnspan = 1)
+	lengthbutton2.grid(row = 1, column = 1, sticky=N+E+S+W)
 	lengthbutton3 = Button(selectframe, text = "Long")
 	lengthbutton3.bind("<Button-1>", lambda event: makelong(event, selectframe))
-	lengthbutton3.grid(row = 1, column = 2, columnspan = 1)
+	lengthbutton3.grid(row = 1, column = 2, sticky=N+E+S+W)
 	#Deiconify select window
 	select.deiconify()
 #--------------------------------------------------------------------#
