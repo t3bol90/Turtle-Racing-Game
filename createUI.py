@@ -20,18 +20,21 @@ def makeshort(event, frame):
 	root.withdraw()
 	select.withdraw()
 	frame.destroy()
+	clearscreen()
 	createtheWorld(12)
 	root.deiconify()
 def makelong(event, frame):
 	root.withdraw()
 	select.withdraw()
 	frame.destroy()
+	clearscreen()
 	createtheWorld(20)
 	root.deiconify()
 def makemedium(event, frame):
 	root.withdraw()
 	select.withdraw()
 	frame.destroy()
+	clearscreen()
 	createtheWorld(16)
 	root.deiconify()
 #Choose length
@@ -39,7 +42,7 @@ def selectLength(event):
 	#Frame contains select buttons
 	selectframe = Frame(select, bg = "#f2cf8d")
 	selectframe.pack(fill = BOTH)
-	#Select text	
+	#Select text
 	selectphoto = PhotoImage(file = "images/select/chooseLength.png", master = selectframe)
 	text = Label(selectframe, image = selectphoto)
 	text.image = selectphoto #This is really annoying when Python uses its garbage-collector :<
