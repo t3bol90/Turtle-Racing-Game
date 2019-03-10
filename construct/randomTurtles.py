@@ -36,7 +36,7 @@ def makeTrueTime_r(time_r):
 	time = []
 	for j in range (4):
 		time.append (time_r[2 * j + 1])
-	time.sort (reverse=True)
+	time.sort (reverse=False)
 	for i in range (4):
 		for j in range (i, 4):
 			if (time[i] == time_r[2 * j + 1]):

@@ -1,6 +1,5 @@
 import time
 from construct import createRoad, createTurtles, randomTurtles,createRanking
-from turtle import *
 from tkinter import *
 
 def createtheWorld(length):

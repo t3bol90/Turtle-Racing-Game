@@ -7,6 +7,7 @@ from construct.constructWorld import *
 root = Tk()
 root.geometry("800x600+300-80")
 root.title("Turtle Racing Boiz")
+root.iconbitmap(default = "images/icon/Turtle.ico")
 #--------------------------------------------------------------------#
 #Set select buttons window
 select = Tk()
@@ -19,21 +20,18 @@ def makeshort(event, frame):
 	root.withdraw()
 	select.withdraw()
 	frame.destroy()
-	clearscreen()
 	createtheWorld(12)
 	root.deiconify()
 def makelong(event, frame):
 	root.withdraw()
 	select.withdraw()
 	frame.destroy()
-	clearscreen()
 	createtheWorld(20)
 	root.deiconify()
 def makemedium(event, frame):
 	root.withdraw()
 	select.withdraw()
 	frame.destroy()
-	clearscreen()
 	createtheWorld(16)
 	root.deiconify()
 #Choose length

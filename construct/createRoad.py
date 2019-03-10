@@ -7,6 +7,8 @@ from construct.createTurtles import gencolor
 def create(n):
 	cv = getcanvas()
 	cv.delete("all")
+	screen = getscreen()
+	title("Turtle Racing Boiz")
 	Bgphoto = PhotoImage(file = "images/race/BGTurtle.gif", master = cv)
 	cv.create_image(-360, -300, image = Bgphoto, anchor = N+W)
 	cv.image = Bgphoto
@@ -14,7 +16,6 @@ def create(n):
 	penup()
 	color("white")
 	bgcolor("black")
-	screensize(360, 100)
 	#Set the default position
 	if (n == 13):
 		startPos = -120
